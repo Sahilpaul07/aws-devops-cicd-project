@@ -1,5 +1,4 @@
 
-
 pipeline {
     agent any
 
@@ -38,7 +37,11 @@ pipeline {
         }
 
         stage('Automated Tests') {
-    steps {
-        sh 'docker run --rm -e PYTHONPATH=/app --entrypoint python ${IMAGE_NAME}:${IMAGE_TAG} -m unittest discover -s /tests -p "test*.py" -v'
+            steps {
+                sh 'docker run --rm -e PYTHONPATH=/app --entrypoint python ${IMAGE_NAME}:${IMAGE_TAG} -m unittest discover -s /tests -p "test*.py" -v'
+            }
+        }
     }
 }
+
+
