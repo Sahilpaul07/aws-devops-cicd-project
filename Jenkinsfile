@@ -37,3 +37,9 @@ pipeline {
         }
     }
 }
+        stage('Automated Tests') {
+            steps {
+                sh 'python -m pip install -r app/requirements.txt'
+                sh 'python -m unittest discover -s tests -v'
+            }
+        }   
