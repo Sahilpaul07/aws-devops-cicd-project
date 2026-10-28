@@ -1,0 +1,26 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws-devops-flask
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aws-devops-flask
+  template:
+    metadata:
+      labels:
+        app: aws-devops-flask
+    spec:
+      containers:
+        - name: flask-app
+          image: sahil1214/aws-devops-flask:latest
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
