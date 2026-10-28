@@ -4,8 +4,10 @@ pipeline {
 
     environment {
         DOCKER_HOST = 'tcp://docker-dind:2375'
+        KUBECONFIG = '/var/jenkins_home/.kube/config'
         IMAGE_NAME = 'aws-devops-flask'
         IMAGE_TAG = 'latest'
+        DOCKERHUB_IMAGE = 'sahil1214/aws-devops-flask:latest'
     }
 
     stages {
@@ -51,15 +53,35 @@ pipeline {
                 )]) {
                     sh '''
                         echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
-                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} sahil1214/aws-devops-flask:latest
-                        docker push sahil1214/aws-devops-flask:latest
+                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKERHUB_IMAGE}
+                        docker push ${DOCKERHUB_IMAGE}
                         docker logout
                     '''
                 }
             }
         }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh '''
+                    kubectl apply -f k8s/deployment.yaml
+                    kubectl apply -f k8s/service.yaml
+
+                    kubectl set image deployment/aws-devops-flask \
+                        flask-app=${DOCKERHUB_IMAGE}
+
+                    kubectl rollout status deployment/aws-devops-flask \
+                        --timeout=120s
+
+                    kubectl get pods
+                    kubectl get service aws-devops-flask-service
+                '''
+            }
+        }
     }
 }
+
+
 
 
 
