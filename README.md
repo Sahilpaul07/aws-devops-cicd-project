@@ -232,19 +232,29 @@
 
 # 
 
-# Screenshots will be added here:
+# \## 1. Jenkins CI/CD Pipeline Success
+
+# !\[Jenkins Pipeline Success](screenshots/jenkins-success.png)
 
 # 
 
-# \- \[ ] Jenkins successful pipeline
+# \## 2. Kubernetes Pods
 
-# \- \[ ] Docker Hub image
+# !\[Kubernetes Pods Running](screenshots/kubernetes-pods.png)
 
-# \- \[ ] Kubernetes pods and service
+# 
 
-# \- \[ ] Application homepage
+# \## 3. Application Homepage
 
-# \- \[ ] Application health endpoint
+# !\[Application Homepage](screenshots/application-homepage.png)
+
+# 
+
+# \## 4. Application Health Check
+
+# !\[Application Health Check](screenshots/health-check.png)
+
+
 
 # 
 
